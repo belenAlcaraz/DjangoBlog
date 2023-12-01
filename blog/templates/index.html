@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load markdown_extras %}
 {% block Contenido %}
 <h1>Publicaciones</h1>
 <div class="card-deck">
@@ -7,7 +7,7 @@
       <div class="card mb-4">
         <div class="card-body">
           <h5 class="card-title">{{ publicacion.titulo }}</h5>
-          <p class="card-text">{{ publicacion.cuerpo }}</p>
+          <p class="card-text">{{ publicacion.cuerpo|markdown|safe }}</p>
           <a href="{% url 'Articulos' pk=publicacion.pk %}" class="btn btn-secondary">Ver Detalles</a>
         </div>
       </div>
