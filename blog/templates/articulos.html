@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block title %} {{ publicacion.titulo }} {% endblock %}
+
+
+{% block Contenido %}
+
+<h1>{{ publicacion.titulo }}</h1>
+<p class="text-muted"><small>De {{ publicacion.autor}} el {{ publicacion.creacion }}</small></p>
+{% if user.is_authenticated %}
+    {% if es_autor %}
+        <a href="{% url 'Actualizar_publicacion' pk=publicacion.pk %}" class="btn btn-secondary">Actualizar</a>
+        <a href="{% url 'Eliminar_publicacion' pk=publicacion.pk %}" class="btn btn-secondary">Eliminar</a>
+    {% else %}
+<a href="{% url 'Agregar_comentario' publicacion_id=publicacion.pk %}" class="btn btn-secondary">Agregar comentario</a> 
+    {% endif %}
+{% endif %}
+<br/> 
+<div class="text-success">
+    <hr>
+</div>
+<br/>
+<p class="text-justify">{{ publicacion.cuerpo}}</p>
+<br/><br/>
+<div class="text-success">
+    <hr>
+</div>
+{% if publicacion.modificacion %}
+<p class="text-muted" > <small>Última modificación: {{ publicacion.modificacion }}</small> </p>
+{% endif %}
+<br/><br/>
+<a href="{% url 'Inicio' %}" class="btn btn-secondary">Back</a>
+<div class="text-success">
+    <hr>
+</div>
+<h2>Comentarios</h2> 
+<div class="container mt-4">
+  {% if not publicacion.comentarios.all %}
+  <p class="text-muted"> Aun no hay comentarios.</p> 
+  {% else %}
+      {% for comentario in publicacion.comentarios.all %}
+      <div class="media-body">
+          <strong>{{ comentario.autor }}</strong> <small class="text-muted ml-2"> - {{ comentario.creacion }}</small> 
+          {% if user.is_authenticated %}
+                    {% if es_autor or user == comentario.autor %}
+                        <a href="{% url 'Eliminar_comentario' comentario.id %}" class="btn btn-secondary">Eliminar Comentario</a>
+                        <a href="{% url 'Actualizar_comentario' comentario.id %}" class="btn btn-secondary">Actualizar Comentario</a>
+                    {% endif %}
+          {% endif %}
+            <p>{{ comentario.cuerpo }}</p>
+      </div>
+
+        <br>          
+      {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}
