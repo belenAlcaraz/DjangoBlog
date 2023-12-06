@@ -5,4 +5,4 @@ register = template.Library()
 
 @register.filter(name='markdown')
 def markdown(text):
-    return md.markdown(text, extensions=['fenced_code','codehillite'])
+    return md.markdown(text, extensions=['fenced_code','codehilite'])
