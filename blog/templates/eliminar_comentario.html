@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block carrusel %}
+
+{% endblock %}
+
 {% block title %} Elimina comentario! {% endblock %}
 
 {% block Contenido %}
@@ -8,7 +12,7 @@
     <hr>
 </div>
 <div class="text-center">
-    <p>¿Está seguro que desea eliminar el comentario {{ comentario.id }}?</p>
+    <p class="alert alert-danger" role="alert">¿Está seguro que desea eliminar el comentario {{ comentario.id }}?</p>
 
     <div class="form-group">
         <form method="post" action="{% url 'Eliminar_comentario' comentario.id %}">

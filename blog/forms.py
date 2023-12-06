@@ -4,23 +4,25 @@ from .models import Publicacion, Comentario
 class PostForm(forms.ModelForm):
     class Meta:
         model = Publicacion
-        fields = ("autor", "titulo", "cuerpo", "categorias")
+        fields = ("autor", "titulo", "cuerpo", "categorias","imagen")
 
         widgets = {
             "autor": forms.Select(attrs={'class': 'form-control'}),
             "titulo": forms.TextInput(attrs={'class': 'form-control'}),
             "cuerpo": forms.Textarea(attrs={'class': 'form-control'}),
             "categorias": forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}),
+            "imagen": forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
 class ActualizarForm(forms.ModelForm):
     class Meta:
         model = Publicacion
-        fields = ("autor", "titulo", "cuerpo")
+        fields = ("autor", "titulo", "cuerpo","imagen")
         widgets = {
             "autor": forms.Select(attrs={'class': 'form-control'}),
             "titulo": forms.TextInput(attrs={'class': 'form-control'}),
-            "cuerpo": forms.Textarea(attrs={'class': 'form-control'}),            
+            "cuerpo": forms.Textarea(attrs={'class': 'form-control'}),
+             "imagen": forms.ClearableFileInput(attrs={'class': 'form-control'}),            
         }
 
 class ComentarioForm(forms.ModelForm):

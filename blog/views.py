@@ -40,12 +40,16 @@ class ArticuloView(DetailView):
         context = super().get_context_data(**kwargs)
         context['es_autor'] = self.request.user == self.get_object().autor
         return context
-    
+
 class AgregarPostView(CreateView):
     model = Publicacion
     form_class = PostForm
     template_name = 'agregar_post.html'    # fields = '__all__' #esto "trae" todos los campos
     success_url = reverse_lazy('Inicio')
+
+    def form_valid(self, form):
+        form.instance.imagen = self.request.FILES.get('imagen')  # Asigna el autor al usuario actual
+        return super().form_valid(form)
     
 class ActualizarPostView(UpdateView):
     model = Publicacion
@@ -98,7 +102,6 @@ class EliminarComentarioView(DeleteView):
         comentario_pk = self.kwargs['pk']
         return get_object_or_404(Comentario, pk=comentario_pk)
     
-
 class ActualizarComentarioView(UpdateView):
     model = Comentario
     form_class = ActualizarComentarioForm

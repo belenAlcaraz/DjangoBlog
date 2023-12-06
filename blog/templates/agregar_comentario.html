@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 
+{% block carrusel %}
+
+{% endblock %}
+
 {% block title %}Agregar Comentario a {{publicacion_id}}{% endblock %}
 
 {% block Contenido %}
 
-<h2>Agregar Comentario</h2>
-<br><br/>
-
-<div class="form-group">
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Enviar</button>
-        <a href="{% url 'Inicio' %}" class="btn btn-secondary">Cancelar</a>
-    </form>
+<div class="container">
+    <h2>Agregar Comentario</h2>
+    <div class="form-group">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <a href="{% url 'Inicio' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>    
 </div>
+
 {% endblock %}
