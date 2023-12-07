@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 
+{% block carrusel %}
+
+{% endblock %}
+
 {% block title %} Registrarse {% endblock %}
 
 {% block Contenido %}
-
-<h1> Registro</h1>
-<br><br/>
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }} 
-       <button  type="submit" class="btn btn-secondary">Enviar</button> 
-</div>
+    <div>
+            <h1> Registro</h1>
+        <br><br/>
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }} 
+            <button  type="submit" class="btn btn-success">Enviar</button> 
+        </div>
+    </div>
+    
 {% endblock %}
