@@ -30,8 +30,10 @@ Including another URLconf
 
 """
 from django.contrib import admin
-from django.urls import path, include
-from blog.views import InicioView, ArticuloView, AgregarPostView, ActualizarPostView, EliminarPostView, ComentarioPostView, EliminarComentarioView, ActualizarComentarioView
+from django.conf import settings
+from django.views.static import serve
+from django.urls import path, include, re_path
+from blog.views import InicioView, ArticuloView, AgregarPostView, ActualizarPostView, EliminarPostView, ComentarioPostView, EliminarComentarioView, ActualizarComentarioView, AgregarCategoriaView,PublicacionesPorCategoria, CategoriasList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,8 +45,16 @@ urlpatterns = [
     path('articulo/agregar_comentario/<int:publicacion_id>/', ComentarioPostView.as_view(), name='Agregar_comentario'),
     path('articulo/eliminar_comentario/<int:pk>', EliminarComentarioView.as_view(), name='Eliminar_comentario'),
     path('articulo/actualizar_comentario/<int:pk>', ActualizarComentarioView.as_view(), name='Actualizar_comentario'),
+    path('agregar_categoria/',AgregarCategoriaView.as_view(), name='Agregar_categoria'),
+    path('categorias/',CategoriasList.as_view(), name='Categorias'),
+    path('categorias/<int:pk>/', PublicacionesPorCategoria.as_view(), name='Publicaciones_por_categoria'),
     #Apartir de  aquí uso la url de la app usuarios
     path('usuarios/',include('django.contrib.auth.urls')),
     path('usuario/',include('usuarios.urls')),
 ]
 
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$',serve,{
+        'document_root': settings.MEDIA_ROOT,
+    })
+]

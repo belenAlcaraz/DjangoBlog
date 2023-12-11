@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block carrusel %}
+
+{% endblock %}
+
 {% block title %} Actualizá una publicación! {% endblock %}
 
 {% block Contenido %}
@@ -7,11 +11,12 @@
 <h1> Actualizar </h1>
 <br><br/>
 <div class="form-group">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }} <!-- esto _p significa que cada campo de nuestro formulario va a estar "rodeado" de <p> 
                             Al _p se lo puede cambiar por ejmplo con un ur o table -->
-       <button  type="submit" class="btn btn-secondary">Publicar</button> 
+       <button  type="submit" class="btn btn-success">Publicar</button> 
+       <a href="{% url 'Inicio' %}" class="btn btn-danger">Cancelar</a>
        <!--<input type="submit" value="Submit"> -->
 </div>
 

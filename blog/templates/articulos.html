@@ -1,39 +1,57 @@
 {% extends 'base.html' %}
+
+{% load static %}
+
 {% load markdown_extras %}
+
+{% block carrusel %}
+
+{% endblock %}
 
 {% block title %} {{ publicacion.titulo }} {% endblock %}
 
-
 {% block Contenido %}
+<div class="container">
+    <h1>{{ publicacion.titulo }}</h1>
 
-<h1>{{ publicacion.titulo }}</h1>
+{% if publicacion.imagen %}
+    <img src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" class="imagen-publicacion">
+  {% endif %}
 <p class="text-muted"><small>De {{ publicacion.autor}} el {{ publicacion.creacion }}</small></p>
+
 {% if user.is_authenticated %}
     {% if es_autor %}
-        <a href="{% url 'Actualizar_publicacion' pk=publicacion.pk %}" class="btn btn-secondary">Actualizar</a>
-        <a href="{% url 'Eliminar_publicacion' pk=publicacion.pk %}" class="btn btn-secondary">Eliminar</a>
+        <a href="{% url 'Actualizar_publicacion' pk=publicacion.pk %}" class="btn btn-outline-success">Actualizar</a>
+        <a href="{% url 'Eliminar_publicacion' pk=publicacion.pk %}" class="btn btn-outline-danger">Eliminar</a>
     {% else %}
-<a href="{% url 'Agregar_comentario' publicacion_id=publicacion.pk %}" class="btn btn-secondary">Agregar comentario</a> 
+<a href="{% url 'Agregar_comentario' publicacion_id=publicacion.pk %}" class="btn btn-outline-success">Agregar comentario</a> 
     {% endif %}
 {% endif %}
+
 <br/> 
 <div class="text-success">
     <hr>
 </div>
 <br/>
+
 <p class="text-justify">{{ publicacion.cuerpo|markdown|safe}}</p>
+
 <br/><br/>
+
 <div class="text-success">
     <hr>
 </div>
+
 {% if publicacion.modificacion %}
 <p class="text-muted" > <small>Última modificación: {{ publicacion.modificacion }}</small> </p>
 {% endif %}
 <br/><br/>
-<a href="{% url 'Inicio' %}" class="btn btn-secondary">Back</a>
+<a href="{% url 'Inicio' %}" class="btn btn-outline-dark">Back</a>
+
 <div class="text-success">
     <hr>
 </div>
+
 <h2>Comentarios</h2> 
 <div class="container mt-4">
   {% if not publicacion.comentarios.all %}
@@ -44,8 +62,8 @@
           <strong>{{ comentario.autor }}</strong> <small class="text-muted ml-2"> - {{ comentario.creacion }}</small> 
           {% if user.is_authenticated %}
                     {% if es_autor or user == comentario.autor %}
-                        <a href="{% url 'Eliminar_comentario' comentario.id %}" class="btn btn-secondary">Eliminar Comentario</a>
-                        <a href="{% url 'Actualizar_comentario' comentario.id %}" class="btn btn-secondary">Actualizar Comentario</a>
+                        <a href="{% url 'Eliminar_comentario' comentario.id %}" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Eliminar Comentario</a>
+                        <a href="{% url 'Actualizar_comentario' comentario.id %}" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Actualizar Comentario</a>
                     {% endif %}
           {% endif %}
             <p>{{ comentario.cuerpo }}</p>
@@ -55,4 +73,6 @@
       {% endfor %}
   {% endif %}
 </div>
+</div>
+
 {% endblock %}

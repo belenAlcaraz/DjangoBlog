@@ -1,14 +1,15 @@
+from collections.abc import Iterable
 from django.db import models
 from django.contrib.auth.models import User # esto ya incluye  nombre y email
 from django.urls import reverse # permite construir URLs para las vistas especificas a partir del nombre
 
 
-# Create your models here.
-
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
+
     def __str__(self):
         return f"{self.nombre}"
+     
 
 class Publicacion(models.Model):
     autor = models.ForeignKey(User, null=True, on_delete=models.CASCADE) 
@@ -17,6 +18,7 @@ class Publicacion(models.Model):
     creacion = models.DateTimeField(auto_now_add=True)
     modificacion = models.DateTimeField(auto_now=True)
     categorias = models.ManyToManyField("Categoria", related_name="publicaciones")
+    imagen = models.ImageField(upload_to='imagenes/', blank=True, null=True)
     
     def __str__(self):
        return f"{self.titulo} | {self.cuerpo}"
@@ -27,6 +29,8 @@ class Publicacion(models.Model):
         """
         #return reverse('Articulos', args = str(self.id)) #self.if es por los pk q tiene cada art
         return reverse('Inicio') # No es necesario pasar parametros
+
+    
 
 class Comentario(models.Model):
     autor = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
