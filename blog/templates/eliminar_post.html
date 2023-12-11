@@ -18,7 +18,7 @@
         <form method="post" action="{% url 'Eliminar_publicacion' publicacion.id %}">
             {% csrf_token %}
         <button  type="submit" class="btn btn-danger">Eliminar</button> 
-        <a href="{% url 'Inicio' %}" class="btn btn-secondary">Cancelar</a>
+        <a href="{% url 'Inicio' %}" class="btn btn-danger">Cancelar</a>
     </div>
 </div>
 

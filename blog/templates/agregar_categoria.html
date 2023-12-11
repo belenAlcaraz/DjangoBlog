@@ -4,19 +4,20 @@
 
 {% endblock %}
 
-{% block title %} Crea una nueva publicación! {% endblock %}
+{% block title %} Crea una nueva categoria! {% endblock %}
 
 {% block Contenido %}
 
 <div class="container">
-    <h3 class="text-center"> Creá una publicación</h3>
+    <h3 class="text-center"> Creá una categoria</h3>
     <br><br/>
-    <div class="form-group" >
+    <div class="form-group">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }} <!-- esto _p significa que cada campo de nuestro formulario va a estar "rodeado" de <p> Al _p se lo puede cambiar por ejmplo con un ur o table -->
+            
             <button  type="submit" class="btn btn-success">Agregar</button> 
-        </form>
+            <a href="{% url 'Inicio' %}" class="btn btn-danger">Cancelar</a>
     </div>
 </div>
 

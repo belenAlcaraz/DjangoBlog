@@ -14,7 +14,8 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }} 
-       <button  type="submit" class="btn btn-secondary">Publicar</button> 
+       <button  type="submit" class="btn btn-success">Publicar</button> 
+       <a href="{% url 'Inicio' %}" class="btn btn-danger">Cancelar</a>
 </div>
 
 

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load markdown_extras %}
+
+{% block carrusel %}
+
+{% endblock %}
+
+{% block Contenido %}
+
+<div class="container mt-5">
+  <div class="container mt-5">
+
+    <h3 class="text-center">Publicaciones</h3>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for publicacion in publicaciones %}
+      <div class="col">
+        <div class="card mb-3">
+          {% if publicacion.imagen %}
+          <img src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" class="imagen-publicacion">
+          {% endif %}
+          <div class="card-body text-center mb-3">
+            <h5 class="card-title">{{ publicacion.titulo }}</h5>
+            <p class="card-text">{{ publicacion.cuerpo|truncatechars:200|markdown|safe }}</p>
+            <a href="{% url 'Articulos' pk=publicacion.pk %}" class="btn btn-outline-primary">Ver Detalles</a>
+            <br /><br />
+            {% if publicacion.modificacion and publicacion.categorias.all %}
+            <p class="text-muted">
+              <small>
+                {% for categoria in publicacion.categorias.all %}
+                <span class="badge text-bg-primary">{{ categoria }}</span>
+                {% endfor %}
+              </small> <br>
+              <small>Última modificación: {{ publicacion.modificacion|date:"d/m/Y" }}</small>
+            </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if publicaciones.count == 0 %}
+    <br /><br />
+    <div class="alert alert-warning text-center" role="alert">
+      No hay publicaciones. ¿Quieres <a href="{% url 'Agregar_publicacion' %}" class="alert-link">crear una nueva
+        publicación</a>?
+    </div>
+    {% endif %}
+
+  </div>
+
+
+  {% endblock %}
