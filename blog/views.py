@@ -1,12 +1,12 @@
 from typing import Any
 from django.db import models
 from django.db.models.query import QuerySet
-from django.shortcuts import get_object_or_404,render
+from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse,reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Publicacion, Comentario, Categoria
-from .forms import PostForm, ActualizarForm, ComentarioForm, ActualizarComentarioForm
+from .forms import PostForm, ActualizarForm, ComentarioForm, ActualizarComentarioForm, AgregarCategoriaForm
 
 #################### Publicación ####################
 
@@ -14,20 +14,6 @@ class InicioView(ListView):
     model = Publicacion  # Significa que trabaja con el model publicacion
     template_name = 'index.html' # mientras que template indica la planilla que se utiliza para mostrar la lista de obj
     ordering = ['-creacion']
-    
-    """ Seguramente se borra
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        categoria_id = self.request.GET.get('categoria')
-        if categoria_id:
-            queryset = queryset.filter(categorias__id = categoria_id) 
-        return queryset
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['Categorias'] = Categoria.objects.all()
-        return context
-    """ 
     
 class ArticuloView(DetailView):
     model = Publicacion
@@ -124,8 +110,32 @@ class ActualizarComentarioView(UpdateView):
     def get_success_url(self):
         """
         Retorna la URL de redirección a la vista 'Articulos' con el pk de la publicación asociada al comentario.
-        
         """
         publicacion_pk = self.get_object().publicacion.pk
         return reverse_lazy('Articulos', kwargs={'pk': publicacion_pk})
     
+
+#################### Categoria ####################
+
+class AgregarCategoriaView(CreateView):
+    model = Categoria
+    form_class = AgregarCategoriaForm
+    template_name = 'agregar_categoria.html'
+    success_url = reverse_lazy('Agregar_publicacion') 
+
+class CategoriasList(ListView):
+    model = Categoria
+    template_name = 'categorias.html'
+    context_object_name = 'categorias'
+
+class PublicacionesPorCategoria(DetailView):
+    model = Categoria
+    template_name = 'publicaciones_por_categoria.html'
+    context_object_name = 'categorias'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categoria = self.get_object()
+        context['publicaciones'] = Publicacion.objects.filter(categorias=categoria)
+        return context
+

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Publicacion, Comentario
+from .models import Publicacion, Comentario, Categoria
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -22,7 +22,7 @@ class ActualizarForm(forms.ModelForm):
             "autor": forms.Select(attrs={'class': 'form-control'}),
             "titulo": forms.TextInput(attrs={'class': 'form-control'}),
             "cuerpo": forms.Textarea(attrs={'class': 'form-control'}),
-             "imagen": forms.ClearableFileInput(attrs={'class': 'form-control'}),            
+            "imagen": forms.ClearableFileInput(attrs={'class': 'form-control'}),            
         }
 
 class ComentarioForm(forms.ModelForm):
@@ -41,4 +41,12 @@ class ActualizarComentarioForm(forms.ModelForm):
         fields = ('cuerpo',)
         widgets = {
             "cuerpo": forms.Textarea(attrs={'class': 'form-control'}),            
+        }
+
+class AgregarCategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ('nombre',)
+        widgets = {
+            "nombre": forms.TextInput(attrs={'class': 'form-control'}),
         }
