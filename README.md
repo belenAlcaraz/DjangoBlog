@@ -10,7 +10,7 @@ El objetivo principal de este proyecto es crear un blog completamente funcional 
 
 - Publicar artículos con soporte para formato Markdown.
 - Comentar en los artículos.
-- Filtrar artículos por categorías y palabras clave.
+- Filtrar artículos por categorías.
 - Incluir imágenes en los artículos.
 
 ## Instalación
